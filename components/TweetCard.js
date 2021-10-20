@@ -6,7 +6,7 @@ import {
   SwitchVerticalIcon,
 } from "@heroicons/react/outline";
 
-const TweetCard = () => {
+const TweetCard = ({ tweetImage, tweetText }) => {
   return (
     <section className="flex hover:bg-gray-100 cursor-pointer border-b-[1px]">
       <img
@@ -16,7 +16,7 @@ const TweetCard = () => {
       />
       <div className="flex-1 p-2">
         {/* tweet user info */}
-        <div className="flex items-center justify-between ">
+        <header className="flex items-center justify-between ">
           <p>
             <span className="font-bold hover:underline">Humphrey Mutuma</span>
             <span className="text-gray-400 ml-1 mr-1">@HumphreyMutuma7</span>
@@ -24,30 +24,33 @@ const TweetCard = () => {
             <span>5m</span>
           </p>
           <DotsHorizontalIcon className="tweetIcons hover:bg-blue-100 text-gray-600 hover:text-blue-500" />
-        </div>
+        </header>
+
         {/* text */}
-        <div className="mt-1 mb-2">
-          <p className="text-gray-800">
-            Just spoke with someone that quit learning how to code because they
-            didn't know JavaScript after 2 months.
-            <br /> Quit doing this to yourselves! <br />
-            Learning how to program takes time but it does become easier!
-            FireHundred points symbol
-          </p>
-          <img
-            className="rounded-lg mt-1"
-            src="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
-            alt=""
-            srcset=""
-          />
-        </div>
+        <main className="mt-1 mb-2">
+          <p className="text-gray-800">{tweetText}</p>
+          <img className="rounded-lg mt-1" src={tweetImage} alt="" srcset="" />
+        </main>
+
         {/* tweet icons */}
-        <div className=" flex items-center justify-between pr-4">
-          <ChatIcon className="tweetIcons hover:bg-blue-100 text-gray-600 hover:text-blue-500" />
-          <SwitchVerticalIcon className="tweetIcons hover:bg-blue-100 text-gray-600 hover:text-blue-500" />
-          <HeartIcon className="tweetIcons hover:bg-red-100 text-gray-600 hover:text-red-500" />
-          <UploadIcon className="tweetIcons hover:bg-green-100 text-gray-600 hover:text-green-500" />
-        </div>
+        <footer className=" flex items-center justify-between pr-4">
+          <span className="flex items-center text-gray-500">
+            <ChatIcon className="tweetIcons hover:bg-blue-100  hover:text-blue-500" />{" "}
+            <span className="text-sm">52</span>
+          </span>
+          <span className="flex items-center text-gray-500">
+            <SwitchVerticalIcon className="tweetIcons hover:bg-blue-100 hover:text-blue-500" />
+            <span className="text-sm">355</span>
+          </span>
+          <span className="flex items-center text-gray-500">
+            <HeartIcon className="tweetIcons hover:bg-red-100 hover:text-red-500" />{" "}
+            <span className="text-sm">76</span>
+          </span>
+          <span className="flex items-center text-gray-500">
+            <UploadIcon className="tweetIcons hover:bg-green-100 hover:text-green-500" />{" "}
+            <span className="text-sm">544</span>
+          </span>
+        </footer>
       </div>
     </section>
   );

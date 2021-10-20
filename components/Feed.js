@@ -56,10 +56,34 @@ const Feed = () => {
 
       {/* feet tweets */}
       <section>
-        <TweetCard />
-        <TweetCard />
-        <TweetCard />
-        <TweetCard />
+        <TweetCard
+          tweetText="Just spoke with someone that quit learning how to code because they
+            didn't know JavaScript after 2 months. Quit doing this to yourselves!
+            Learning how to program takes time but it does become easier!
+            FireHundred points symbol"
+          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
+        />
+        <TweetCard
+          tweetText="Just spoke with someone that quit learning how to code because they
+            didn't know JavaScript after 2 months. Quit doing this to yourselves!
+            Learning how to program takes time but it does become easier!
+            FireHundred points symbol"
+          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
+        />
+        <TweetCard
+          tweetText="Just spoke with someone that quit learning how to code because they
+            didn't know JavaScript after 2 months. Quit doing this to yourselves!
+            Learning how to program takes time but it does become easier!
+            FireHundred points symbol"
+          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
+        />
+        <TweetCard
+          tweetText="Just spoke with someone that quit learning how to code because they
+            didn't know JavaScript after 2 months. Quit doing this to yourselves!
+            Learning how to program takes time but it does become easier!
+            FireHundred points symbol"
+          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
+        />
       </section>
     </main>
   );
