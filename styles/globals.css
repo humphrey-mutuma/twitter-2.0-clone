@@ -2,3 +2,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .feedTweetSpan{
+    @apply hover:bg-blue-50 cursor-pointer rounded-full p-1
+  }
+  .feedTweetIcons{
+    @apply h-5 w-5 text-blue-500 
+  }
+}
