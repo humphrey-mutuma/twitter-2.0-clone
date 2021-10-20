@@ -10,19 +10,19 @@ export default function Home() {
         <title>twitter 2.0 clone</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" grid grid-cols-9 bg-white min-h-screen ">
+      <main className=" grid grid-cols-10 bg-white  ">
         {/* Sidebar */}
-        <section className="border hidden sm:inline-grid sm:col-span-2 lg:col-span-2">
+        <section className="sticky top-0  hidden sm:inline-grid sm:col-span-2 lg:col-span-2 max-h-screen">
           <Sidebar />
         </section>
 
         {/* feed */}
-        <section className="border  col-span-9 sm:col-span-7  lg:col-span-4">
+        <section className="border  col-span-10 sm:col-span-8  lg:col-span-5">
           <Feed />
         </section>
 
         {/* Widgets */}
-        <section className="border hidden  lg:inline-grid  lg:col-span-3">
+        <section className=" hidden  lg:inline-grid  lg:col-span-3">
           <Widgets />
         </section>
       </main>

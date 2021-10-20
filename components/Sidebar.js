@@ -44,7 +44,7 @@ const Sidebar = () => {
       {/* mini user account */}
       <div className="flex items-center p-2 mb-4 w-full cursor-pointer hover:bg-gray-200 rounded-full">
         <img
-          className="h-10 w-10 rounded-full "
+          className="h-10 w-10 rounded-full object-cover"
           src="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
           alt=""
         />
