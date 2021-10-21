@@ -1,12 +1,11 @@
 import { useRecoilState } from "recoil";
-import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import { modalState } from "../atoms/modalAtom";
 
 const Modal = () => {
   const [open, setOpen] = useRecoilState(modalState);
-  const { data: session } = useSession();
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -44,7 +43,19 @@ const Modal = () => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-              This is the login modal
+              <div class="text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Oops!</strong>{" "}
+                <span class="block sm:inline">
+                  You Must be signed in to tweet.
+                </span>
+              </div>
+              <br />
+              <button
+                onClick={() => signIn()}
+                className=" text-white text-lg p-3 w-full rounded-full border-[1px] bg-blue-400"
+              >
+                Sign In
+              </button>
             </div>
           </Transition.Child>
         </div>

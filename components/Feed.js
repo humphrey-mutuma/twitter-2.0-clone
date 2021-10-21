@@ -18,8 +18,13 @@ const Feed = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOpen(true);
+    if (!session) {
+      setOpen(true);
+    } else {
+      console.log("logged in");
+    }
   };
+
   return (
     <main>
       <nav
@@ -44,12 +49,10 @@ const Feed = () => {
               className="p-3 text-xl w-full focus:outline-none  focus:border-transparent scrollbar-hide"
               type="text"
             />
+            <div>image preview</div>
 
             <section className="flex items-center justify-between ">
               <div className="flex items-center ">
-                <span className="feedTweetSpan">
-                  <PhotographIcon className="feedTweetIcons " />
-                </span>
                 <span className="feedTweetSpan">
                   <GiftIcon className="feedTweetIcons " />
                 </span>
@@ -60,12 +63,19 @@ const Feed = () => {
                   <CalendarIcon className="feedTweetIcons " />
                 </span>
               </div>
-              <button
-                onClick={handleSubmit}
-                className=" bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full hover:bg-blue-600"
-              >
-                Tweet
-              </button>
+
+              {/* tweet  */}
+              <section className="flex items-center justify-between">
+                <span className="feedTweetSpan cursor-pointer">
+                  <PhotographIcon className=" w-8 h-8 text-blue-500" />
+                </span>
+                <button
+                  onClick={handleSubmit}
+                  className=" bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full hover:bg-blue-600"
+                >
+                  Tweet
+                </button>
+              </section>
             </section>
           </form>
         </div>
