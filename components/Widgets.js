@@ -1,8 +1,20 @@
 import { SearchIcon, CogIcon } from "@heroicons/react/outline";
+import { useEffect, useState } from "react";
 import TreadingItem from "./TreadingItem";
 import WhoToFollow from "./WhoToFollow";
+import faker from "faker";
 
 const Widgets = () => {
+  const [peopleToFollow, setPeopleToFollow] = useState([]);
+  useEffect(() => {
+    const suggestions = [...Array(3)].map((_, i) => ({
+      ...faker.helpers.contextualCard(),
+      id: i,
+    }));
+    setPeopleToFollow(suggestions);
+  }, []);
+
+
   return (
     <section className="pl-3 pr-3  bg-white">
       <section className="bg-white  sticky top-0 z-10">
@@ -23,6 +35,7 @@ const Widgets = () => {
           <h2 className="font-semibold text-lg ">Treads For you</h2>
           <CogIcon className="tweetIcons text-gray-600 hover:bg-blue-100 hover:text-blue-500" />
         </div>
+
         <TreadingItem
           title="Nextjs"
           location="Worldwide"
@@ -58,21 +71,15 @@ const Widgets = () => {
         <div className="pl-5 pr-5 pt-2 pb-2 flex justify-between">
           <h2 className="font-semibold text-lg ">Who to follow</h2>
         </div>
-        <WhoToFollow
-          userToFollowImage="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
-          userToFollowName="Humphrey Mutuma"
-          userToFollowUsername="@HumphreyMutuma7"
-        />
-        <WhoToFollow
-          userToFollowImage="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
-          userToFollowName="Humphrey Mutuma"
-          userToFollowUsername="@HumphreyMutuma7"
-        />
-        <WhoToFollow
-          userToFollowImage="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
-          userToFollowName="Humphrey Mutuma"
-          userToFollowUsername="@HumphreyMutuma7"
-        />
+
+        {peopleToFollow.map((personToFollow) => (
+          <WhoToFollow
+            userToFollowImage={personToFollow.avatar}
+            userToFollowName={personToFollow.name}
+            userToFollowUsername={personToFollow.username}
+          />
+        ))}
+
         <button className="w-full text-left text-blue-500 p-2 pl-5 rounded-b-2xl cursor-pointer hover:bg-gray-200">
           Show More
         </button>
