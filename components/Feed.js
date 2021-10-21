@@ -5,12 +5,17 @@ import {
   EmojiHappyIcon,
   CalendarIcon,
 } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
 import TweetCard from "./TweetCard";
 
 const Feed = () => {
+  const router = useRouter();
   return (
     <main>
-      <nav className="sticky top-0 z-50 bg-white flex justify-between items-center h-[3rem] border-b-[1px] cursor-pointer">
+      <nav
+        onClick={() => router.push("/")}
+        className="sticky top-0 z-50 bg-white flex justify-between items-center h-[3rem] border-b-[1px] cursor-pointer"
+      >
         <h1 className="font-bold ml-4 text-lg">Home</h1>
         <SparklesIcon className="h-6 w-6 mr-4 " />
       </nav>

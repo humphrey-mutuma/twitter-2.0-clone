@@ -12,12 +12,16 @@ import {
   PlusIcon,
 } from "@heroicons/react/outline";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
+  const router = useRouter();
+
   return (
     <div className=" flex flex-col items-center mx-auto md:grid">
       <div className="p-2 mt-2 ">
         <img
+          onClick={() => router.push("/")}
           className="h-8 w-8 cursor-pointer"
           src="https://cdn.pixabay.com/photo/2014/04/03/11/53/twitter-312464_960_720.png"
           alt=""
