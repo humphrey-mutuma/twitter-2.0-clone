@@ -77,6 +77,29 @@ const Widgets = () => {
           Show More
         </button>
       </section>
+
+      <section className="p-5">
+        <p>
+          <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
+            Terms of Service
+          </span>{" "}
+          <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
+            Privacy Policy
+          </span>{" "}
+          <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
+            Cookie Policy
+          </span>{" "}
+          <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
+            Ads info
+          </span>{" "}
+          <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
+            More...
+          </span>{" "}
+          <span className="text-sm text-gray-400">
+            © 2021 Twitter, Inc.
+          </span>
+        </p>
+      </section>
     </section>
   );
 };
