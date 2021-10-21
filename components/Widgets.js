@@ -14,14 +14,13 @@ const Widgets = () => {
     setPeopleToFollow(suggestions);
   }, []);
 
-
   return (
     <section className="pl-3 pr-3  bg-white">
       <section className="bg-white  sticky top-0 z-10">
-        <div class=" w-full  flex items-center bg-white pt-2 pb-2">
+        <div className=" w-full  flex items-center bg-white pt-2 pb-2">
           <SearchIcon className="w-5 h-5 absolute ml-3  text-gray-500" />
           <input
-            class=" bg-gray-200 border-[1px]  p-3 pl-10 flex-1 appearance-none focus:border-[1px] rounded-full w-full focus:outline-none focus:bg-white focus:border-blue-500"
+            className=" bg-gray-200 border-[1px]  p-3 pl-10 flex-1 appearance-none focus:border-[1px] rounded-full w-full focus:outline-none focus:bg-white focus:border-blue-500"
             type="text"
             placeholder="Search Twitter"
           />
@@ -74,6 +73,7 @@ const Widgets = () => {
 
         {peopleToFollow.map((personToFollow) => (
           <WhoToFollow
+            key={personToFollow.id}
             userToFollowImage={personToFollow.avatar}
             userToFollowName={personToFollow.name}
             userToFollowUsername={personToFollow.username}

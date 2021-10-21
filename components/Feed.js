@@ -25,7 +25,6 @@ const Feed = () => {
           <form>
             <textarea
               placeholder="What's happening? "
-              multiple
               rows="1"
               className="p-3 text-xl w-full focus:outline-none  focus:border-transparent scrollbar-hide"
               type="text"

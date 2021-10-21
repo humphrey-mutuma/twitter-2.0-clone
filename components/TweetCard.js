@@ -29,7 +29,7 @@ const TweetCard = ({ tweetImage, tweetText }) => {
         {/* text */}
         <main className="mt-1 mb-2">
           <p className="text-gray-800">{tweetText}</p>
-          <img className="rounded-lg mt-1" src={tweetImage} alt="" srcset="" />
+          <img className="rounded-lg mt-1" src={tweetImage} alt="" />
         </main>
 
         {/* tweet icons */}
