@@ -5,16 +5,26 @@ import {
   EmojiHappyIcon,
   CalendarIcon,
 } from "@heroicons/react/outline";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
 import TweetCard from "./TweetCard";
 
 const Feed = () => {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const [open, setOpen] = useRecoilState(modalState);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOpen(true);
+  };
   return (
     <main>
       <nav
         onClick={() => router.push("/")}
-        className="sticky top-0 z-50 bg-white flex justify-between items-center h-[3rem] border-b-[1px] cursor-pointer"
+        className="sticky top-0 z-10 bg-white flex justify-between items-center h-[3rem] border-b-[1px] cursor-pointer"
       >
         <h1 className="font-bold ml-4 text-lg">Home</h1>
         <SparklesIcon className="h-6 w-6 mr-4 " />
@@ -35,7 +45,7 @@ const Feed = () => {
               type="text"
             />
 
-            <section className="flex items-center justify-between border-t-[1px]">
+            <section className="flex items-center justify-between ">
               <div className="flex items-center ">
                 <span className="feedTweetSpan">
                   <PhotographIcon className="feedTweetIcons " />
@@ -50,7 +60,10 @@ const Feed = () => {
                   <CalendarIcon className="feedTweetIcons " />
                 </span>
               </div>
-              <button className=" bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full hover:bg-blue-600">
+              <button
+                onClick={handleSubmit}
+                className=" bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full hover:bg-blue-600"
+              >
                 Tweet
               </button>
             </section>
