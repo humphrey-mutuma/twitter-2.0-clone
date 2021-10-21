@@ -22,7 +22,7 @@ export default function Home() {
         </section>
 
         {/* Widgets */}
-        <section className=" hidden  lg:inline-grid  lg:col-span-3">
+        <section className=" hidden  lg:inline-grid  lg:col-span-3 sticky top-0 max-h-screen overflow-y-scroll scrollbar-hide ">
           <Widgets />
         </section>
       </main>

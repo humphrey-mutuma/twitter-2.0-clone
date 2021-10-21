@@ -95,11 +95,11 @@ const Widgets = () => {
           <span className="text-sm text-gray-400 hover:underline cursor-pointer pr-2">
             More...
           </span>{" "}
-          <span className="text-sm text-gray-400">
-            © 2021 Twitter, Inc.
-          </span>
+          <span className="text-sm text-gray-400">© 2021 Twitter, Inc.</span>
         </p>
       </section>
+      <br />
+      <br />
     </section>
   );
 };
