@@ -2,6 +2,9 @@ import {
   addDoc,
   collection,
   doc,
+  onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   updateDoc,
 } from "@firebase/firestore";
@@ -15,7 +18,7 @@ import {
 } from "@heroicons/react/outline";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import { db, storage } from "../firebase";
@@ -29,6 +32,7 @@ const Feed = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [tweetValue, setTweetValue] = useState("");
+  const [tweets, setTweets] = useState([]);
 
   // upload to firebase storage
   // upload image to firebase
@@ -48,6 +52,7 @@ const Feed = () => {
       // update origin post with the image url
       const docRef = await addDoc(collection(db, "tweets"), {
         username: session.user.username,
+        name: session.user.name,
         tweet: tweetValue,
         profileImg: session.user.image,
         timestamp: serverTimestamp(),
@@ -91,7 +96,19 @@ const Feed = () => {
     };
   };
 
-  
+  // ********************************************************/
+  // fetch data from firestore
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(collection(db, "tweets"), orderBy("timestamp", "desc")),
+      (snapshot) => {
+        setTweets(snapshot.docs);
+      }
+    );
+    return unsubscribe;
+  }, [db]);
+  // *****************************************************
+
   return (
     <main>
       <nav
@@ -105,11 +122,11 @@ const Feed = () => {
       <section className="w-full flex  border-b-[1px]">
         <img
           className="h-12 w-12 rounded-full m-4 object-cover"
-          src="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
+          src={session?.user.image}
           alt=""
         />
         <div className="flex-1 mr-4">
-          <form>
+          <form onSubmit={uploadPhoto}>
             <textarea
               required
               onChange={(e) => setTweetValue(e.target.value)}
@@ -155,7 +172,7 @@ const Feed = () => {
                   >
                     <PhotographIcon className=" w-8 h-8 text-blue-500" />{" "}
                     {selectedFile ? (
-                      <span>upload</span>
+                      <span>Uploaded</span>
                     ) : (
                       <span> No file Selected</span>
                     )}
@@ -186,35 +203,19 @@ const Feed = () => {
       </section>
 
       {/* feet tweets */}
+
       <section>
-        <TweetCard
-          tweetText="Just spoke with someone that quit learning how to code because they
-            didn't know JavaScript after 2 months. Quit doing this to yourselves!
-            Learning how to program takes time but it does become easier!
-            FireHundred points symbol"
-          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
-        />
-        <TweetCard
-          tweetText="Just spoke with someone that quit learning how to code because they
-            didn't know JavaScript after 2 months. Quit doing this to yourselves!
-            Learning how to program takes time but it does become easier!
-            FireHundred points symbol"
-          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
-        />
-        <TweetCard
-          tweetText="Just spoke with someone that quit learning how to code because they
-            didn't know JavaScript after 2 months. Quit doing this to yourselves!
-            Learning how to program takes time but it does become easier!
-            FireHundred points symbol"
-          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
-        />
-        <TweetCard
-          tweetText="Just spoke with someone that quit learning how to code because they
-            didn't know JavaScript after 2 months. Quit doing this to yourselves!
-            Learning how to program takes time but it does become easier!
-            FireHundred points symbol"
-          tweetImage="https://cdn.pixabay.com/photo/2020/04/24/15/58/white-water-lily-5087465__340.jpg"
-        />
+        {tweets.map((tweet) => (
+          <TweetCard
+            key={tweet.id}
+            id={tweet.id}
+            tweetText={tweet.data().tweet}
+            tweetImage={tweet.data().image}
+            userImage={tweet.data().profileImg}
+            username={tweet.data().username}
+            name = {tweet.data().name}
+          />
+        ))}
       </section>
     </main>
   );

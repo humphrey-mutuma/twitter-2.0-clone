@@ -11,12 +11,12 @@ import {
   DotsHorizontalIcon,
   PlusIcon,
 } from "@heroicons/react/outline";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const router = useRouter();
-
+  const { data: session } = useSession();
   return (
     <div className=" flex flex-col items-center mx-auto md:grid">
       <div className="p-2 mt-2 ">
@@ -47,17 +47,19 @@ const Sidebar = () => {
       </div>
       <br />
       {/* mini user account */}
+
+      
       <div
         onClick={() => signOut()}
         className="flex items-center p-2 mb-4 w-full cursor-pointer hover:bg-gray-200 rounded-full"
       >
         <img
           className="h-10 w-10 rounded-full object-cover"
-          src="https://scontent.fnbo9-1.fna.fbcdn.net/v/t1.6435-9/39700554_189956408607706_3333751201383579648_n.jpg?_nc_cat=107&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeGsHiqUtc6rhY_8qkhFd_CADsuEpp0tV7sOy4SmnS1XuzWsDZ-MDY-eDp_Ugr8KX-dF3OBwZ1uIIWz-3Jku2-RW&_nc_ohc=zqLWdK0KzkgAX9dQNYA&_nc_pt=5&_nc_ht=scontent.fnbo9-1.fna&oh=813ab2a5c2b58fb29999df2114c95a8a&oe=619741AD"
+          src={session?.user.image}
           alt=""
         />
         <p className=" hidden md:inline pl-2 pr-2 text-sm">
-          <span className="font-bold">Humphrey Mutuma</span> <br />{" "}
+          <span className="font-bold">{session?.user.name}</span> <br />{" "}
           @humphreymutuma
         </p>
         <DotsHorizontalIcon className="hidden md:inline-grid h-6 w-6 " />
