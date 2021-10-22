@@ -7,6 +7,7 @@ import {
 } from "@heroicons/react/outline";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
 import TweetCard from "./TweetCard";
@@ -15,7 +16,10 @@ const Feed = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [open, setOpen] = useRecoilState(modalState);
+  const filePicker = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
+  // trigger opening of the modal if the user tries to tweet while not logged in
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!session) {
@@ -24,6 +28,19 @@ const Feed = () => {
       console.log("logged in");
     }
   };
+
+  const addImageToPost = (e) => {
+    const reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result);
+    };
+  };
+
 
   return (
     <main>
@@ -44,12 +61,24 @@ const Feed = () => {
         <div className="flex-1 mr-4">
           <form>
             <textarea
+              // ref={captionRef}
               placeholder="What's happening? "
               rows="1"
               className="p-3 text-xl w-full focus:outline-none  focus:border-transparent scrollbar-hide"
               type="text"
             />
-            <div>image preview</div>
+
+            {/* show the selected image preview if available and remove on click event */}
+            {selectedFile && (
+              <div>
+                <img
+                  src={selectedFile}
+                  className="w-full object-contain cursor-pointer rounded-2xl"
+                  onClick={() => setSelectedFile(null)}
+                  alt=""
+                />
+              </div>
+            )}
 
             <section className="flex items-center justify-between ">
               <div className="flex items-center ">
@@ -66,8 +95,26 @@ const Feed = () => {
 
               {/* tweet  */}
               <section className="flex items-center justify-between">
-                <span className="feedTweetSpan cursor-pointer">
-                  <PhotographIcon className=" w-8 h-8 text-blue-500" />
+                <span className="feedTweetSpan cursor-pointer ">
+                  {/* pick files when user clicks the icon */}
+                  <span
+                    onClick={() => filePicker.current.click()}
+                    className="flex items-center"
+                  >
+                    <PhotographIcon className=" w-8 h-8 text-blue-500" />{" "}
+                    {selectedFile ? (
+                      <span>upload</span>
+                    ) : (
+                      <span> No file Selected</span>
+                    )}
+                  </span>
+                  {/* hidden input for file picking */}
+                  <input
+                    ref={filePicker}
+                    onChange={addImageToPost}
+                    type="file"
+                    hidden
+                  />
                 </span>
                 <button
                   onClick={handleSubmit}
