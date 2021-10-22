@@ -44,7 +44,8 @@ const Feed = () => {
     } else {
       if (loading) return;
       setLoading(true);
-
+      setSelectedFile(null);
+      setTweetValue("");
       // create a post and add to firestore
       // we'll get an id of newly created post
       // upload image to storage with the post id
@@ -57,7 +58,6 @@ const Feed = () => {
         profileImg: session.user.image,
         timestamp: serverTimestamp(),
       });
-      setSelectedFile(null);
 
       // get the post id
       // console.log("new doc added with id ", docRef.id);
@@ -79,7 +79,6 @@ const Feed = () => {
       }
 
       setLoading(false);
-      setTweetValue("");
     }
   };
 
@@ -191,7 +190,7 @@ const Feed = () => {
                   disabled={tweetValue.trim() === "" && !selectedFile}
                   onClick={uploadPhoto}
                   className={` ${
-                    tweetValue.trim() === "" && !selectedFile && "bg-blue-200"
+                    tweetValue.trim() === "" && !selectedFile && "bg-blue-300"
                   } bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full`}
                 >
                   Tweet
@@ -213,7 +212,7 @@ const Feed = () => {
             tweetImage={tweet.data().image}
             userImage={tweet.data().profileImg}
             username={tweet.data().username}
-            name = {tweet.data().name}
+            name={tweet.data().name}
           />
         ))}
       </section>
