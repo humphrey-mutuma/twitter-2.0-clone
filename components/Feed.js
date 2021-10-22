@@ -1,4 +1,12 @@
 import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "@firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "@firebase/storage";
+import {
   SparklesIcon,
   PhotographIcon,
   GiftIcon,
@@ -10,6 +18,7 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import { db, storage } from "../firebase";
 import TweetCard from "./TweetCard";
 
 const Feed = () => {
@@ -18,17 +27,58 @@ const Feed = () => {
   const [open, setOpen] = useRecoilState(modalState);
   const filePicker = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [tweetValue, setTweetValue] = useState("");
 
-  // trigger opening of the modal if the user tries to tweet while not logged in
-  const handleSubmit = (e) => {
+  // upload to firebase storage
+  // upload image to firebase
+  const uploadPhoto = async (e) => {
     e.preventDefault();
+    // trigger opening of the modal if the user tries to tweet while not logged in
     if (!session) {
       setOpen(true);
     } else {
-      console.log("logged in");
+      if (loading) return;
+      setLoading(true);
+
+      // create a post and add to firestore
+      // we'll get an id of newly created post
+      // upload image to storage with the post id
+      // get the download URL from storage
+      // update origin post with the image url
+      const docRef = await addDoc(collection(db, "tweets"), {
+        username: session.user.username,
+        tweet: tweetValue,
+        profileImg: session.user.image,
+        timestamp: serverTimestamp(),
+      });
+      setSelectedFile(null);
+
+      // get the post id
+      // console.log("new doc added with id ", docRef.id);
+      // upload image to firebase storage
+      const imageRef = ref(storage, `tweets/${docRef.id}/image`);
+
+      if (selectedFile) {
+        await uploadString(imageRef, selectedFile, "data_url").then(
+          async (Snapshot) => {
+            // get the  download URL
+            const downloadURL = await getDownloadURL(imageRef);
+
+            // update the post in firestore using the doc id
+            await updateDoc(doc(db, "tweets", docRef.id), {
+              image: downloadURL,
+            });
+          }
+        );
+      }
+
+      setLoading(false);
+      setTweetValue("");
     }
   };
 
+  // add image
   const addImageToPost = (e) => {
     const reader = new FileReader();
 
@@ -41,7 +91,7 @@ const Feed = () => {
     };
   };
 
-
+  
   return (
     <main>
       <nav
@@ -61,7 +111,9 @@ const Feed = () => {
         <div className="flex-1 mr-4">
           <form>
             <textarea
-              // ref={captionRef}
+              required
+              onChange={(e) => setTweetValue(e.target.value)}
+              value={tweetValue}
               placeholder="What's happening? "
               rows="1"
               className="p-3 text-xl w-full focus:outline-none  focus:border-transparent scrollbar-hide"
@@ -116,9 +168,14 @@ const Feed = () => {
                     hidden
                   />
                 </span>
+
+                {/* disable and change button color if both input fields are empty */}
                 <button
-                  onClick={handleSubmit}
-                  className=" bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full hover:bg-blue-600"
+                  disabled={tweetValue.trim() === "" && !selectedFile}
+                  onClick={uploadPhoto}
+                  className={` ${
+                    tweetValue.trim() === "" && !selectedFile && "bg-blue-200"
+                  } bg-blue-500 h-10 w-20 text-sm  m-2 text-white p-2 rounded-full`}
                 >
                   Tweet
                 </button>
