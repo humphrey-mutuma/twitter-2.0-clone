@@ -24,7 +24,7 @@ const TweetCard = ({
 
   return (
     <section
-      onClick={() => router.push(`comments/ ${tweetId && tweetId}`)}
+      onClick={() => router.push(`comments/${tweetId && tweetId}`)}
       className="flex hover:bg-gray-100 cursor-pointer border-b-[1px]"
     >
       <img
