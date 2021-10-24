@@ -5,10 +5,28 @@ import {
   UploadIcon,
   SwitchVerticalIcon,
 } from "@heroicons/react/outline";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { db } from "../firebase";
 
-const TweetCard = ({ tweetImage, tweetText, userImage, username, name }) => {
+const TweetCard = ({
+  tweetImage,
+  tweetText,
+  userImage,
+  username,
+  name,
+  tweetId,
+}) => {
+  const router = useRouter();
+
+  
+
   return (
-    <section className="flex hover:bg-gray-100 cursor-pointer border-b-[1px]">
+    <section
+      onClick={() => router.push(`comments/ ${tweetId && tweetId}`)}
+      className="flex hover:bg-gray-100 cursor-pointer border-b-[1px]"
+    >
       <img
         className="h-10 w-10 m-4 rounded-full object-cover"
         src={userImage}

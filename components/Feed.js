@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
@@ -36,6 +37,7 @@ const Feed = () => {
 
   // upload to firebase storage
   // upload image to firebase
+
   const uploadPhoto = async (e) => {
     e.preventDefault();
     // trigger opening of the modal if the user tries to tweet while not logged in
@@ -57,6 +59,7 @@ const Feed = () => {
         tweet: tweetValue,
         profileImg: session.user.image,
         timestamp: serverTimestamp(),
+        likes: [],
       });
 
       // get the post id
@@ -202,12 +205,13 @@ const Feed = () => {
       </section>
 
       {/* feet tweets */}
+      {/* post */}
 
       <section>
         {tweets.map((tweet) => (
           <TweetCard
             key={tweet.id}
-            id={tweet.id}
+            tweetId={tweet.id}
             tweetText={tweet.data().tweet}
             tweetImage={tweet.data().image}
             userImage={tweet.data().profileImg}
